@@ -5,6 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="theme-color" content="#f6f1e8" />
     <title>税金回収カウンター</title>
+
+    <!-- ==========================================
+      【重要】Google AdSense 審査用・自動広告配信タグ
+      ※アドセンス合格後、または審査をスムーズに進めるため、
+        "ca-pub-XXXXXXXXXXXXXXXX" の部分をご自身のパブリッシャーID（pub-から始まる16桁の数字）に書き換えてください。
+    ========================================== -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5682898371122354"
+     crossorigin="anonymous"></script>
+
+    <!-- ==========================================
+      【重要】アプリのアイコン（Favicon & ホーム画面用）設定
+      ※ご提示いただいた素晴らしいアイコン画像を「icon.png」という名前で
+        index.htmlと同じフォルダにアップロードしておくだけで、スマホやブラウザに自動反映されます。
+    ========================================== -->
+    <link rel="icon" type="image/png" href="./icon.png" />
+    <link rel="apple-touch-icon" href="./icon.png" />
+
     <style>
       /* --- デザインシステム & CSS変数定義 --- */
       :root {
@@ -24,7 +41,7 @@
         --transition: all 0.25s ease;
       }
 
-      /* ダークモード（ライブラリ） */
+      /* ダークモード */
       [data-theme="dark"] {
         --bg-app: #1a1613;
         --bg-card: #26211d;
@@ -38,7 +55,7 @@
         --shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
       }
 
-      /* 明細ベース（レシート風）テーマ */
+      /* 明細ベース */
       [data-style="statement"] {
         --bg-app: #f4f4f5;
         --bg-card: #ffffff;
@@ -66,7 +83,7 @@
         --gauge-track: #27272a;
       }
 
-      /* 大人のミニゲーム（ネオン調）テーマ */
+      /* 大人のミニゲーム */
       [data-style="game"] {
         --bg-app: #0f172a;
         --bg-card: #1e293b;
@@ -82,7 +99,6 @@
         --shadow: 0 0 15px rgba(56, 189, 248, 0.25);
       }
       [data-style="game"][data-theme="dark"] {
-        /* ゲームスタイルは常時サイバー寄りのデザイン */
         --bg-app: #020617;
         --bg-card: #0f172a;
         --accent: #f43f5e;
@@ -114,7 +130,7 @@
         max-width: 480px;
         display: flex;
         flex-direction: column;
-        padding: 16px 16px 90px 16px;
+        padding: 16px 16px 160px 16px; /* 広告＆タブ分の十分な余白 */
         position: relative;
       }
 
@@ -138,9 +154,19 @@
         font-size: 1.4rem;
         font-weight: 800;
         letter-spacing: -0.02em;
+        display: flex;
+        align-items: center;
+        gap: 8px;
       }
 
-      /* ボタン汎用 */
+      /* アプリ名横のミニアイコン表示 */
+      h1 img {
+        width: 28px;
+        height: 28px;
+        border-radius: 6px;
+      }
+
+      /* ボタン */
       .icon-button {
         background: none;
         border: none;
@@ -187,10 +213,81 @@
         transition: var(--transition);
         width: 100%;
         box-shadow: var(--shadow);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
       }
 
       .primary-button:hover {
         background-color: var(--accent-hover);
+      }
+
+      /* 成果シェア用ボタン */
+      .share-button {
+        background-color: #1da1f2;
+        color: white;
+        border: none;
+        padding: 12px;
+        border-radius: var(--radius);
+        font-weight: bold;
+        font-size: 0.85rem;
+        cursor: pointer;
+        transition: var(--transition);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        margin-top: 12px;
+        width: 100%;
+      }
+
+      .share-button:hover {
+        background-color: #1a91da;
+      }
+
+      /* アカウントフォローボタン（𝕏） */
+      .x-follow-button {
+        background-color: #000000;
+        color: white;
+        border: none;
+        padding: 10px 16px;
+        border-radius: var(--radius);
+        font-weight: bold;
+        font-size: 0.8rem;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        transition: var(--transition);
+        margin-top: 8px;
+        width: 100%;
+      }
+
+      .x-follow-button:hover {
+        background-color: #222222;
+      }
+
+      /* Amazonアソシエイトボタン */
+      .amazon-btn {
+        background-color: #ff9900;
+        color: #111111;
+        border: 1px solid #a88734;
+        padding: 6px 12px;
+        border-radius: 6px;
+        font-size: 0.75rem;
+        font-weight: bold;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        transition: var(--transition);
+      }
+
+      .amazon-btn:hover {
+        background-color: #f7dfa5;
+        border-color: #a88734;
       }
 
       /* ビュー制御 */
@@ -235,7 +332,7 @@
         margin-bottom: 16px;
         display: flex;
         flex-direction: column;
-        gap: 20px;
+        gap: 16px;
         transition: var(--transition);
       }
 
@@ -357,9 +454,19 @@
         border: 1px solid var(--border-color);
         box-shadow: var(--shadow);
         display: flex;
+        flex-direction: column;
+        gap: 0px;
+        transition: var(--transition);
+        overflow: hidden;
+      }
+
+      .book-main-row {
+        display: flex;
         justify-content: space-between;
         align-items: center;
-        transition: var(--transition);
+        width: 100%;
+        padding-bottom: 0px;
+        transition: padding 0.2s ease;
       }
 
       .book-info {
@@ -382,6 +489,7 @@
         display: flex;
         gap: 8px;
         flex-wrap: wrap;
+        align-items: center;
       }
 
       .book-actions {
@@ -390,7 +498,44 @@
         align-items: center;
       }
 
-      /* 返却間近バッジ */
+      /* プランB: Amazon購入アフィリエイト枠（読了で出現するアニメーション設計） */
+      .book-monetize-row {
+        height: 0;
+        opacity: 0;
+        visibility: hidden;
+        border-top: 1px dashed transparent;
+        padding-top: 0;
+        margin-top: 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: height 0.3s ease, opacity 0.3s ease, margin-top 0.3s ease, padding-top 0.3s ease;
+        width: 100%;
+      }
+
+      /* 読了状態になったときに出現するスタイル */
+      .book-card.is-read-mode {
+        gap: 10px;
+      }
+      .book-card.is-read-mode .book-main-row {
+        padding-bottom: 4px;
+      }
+      .book-card.is-read-mode .book-monetize-row {
+        height: auto;
+        opacity: 1;
+        visibility: visible;
+        border-top-color: var(--border-color);
+        padding-top: 10px;
+        margin-top: 4px;
+      }
+
+      .monetize-text {
+        font-size: 0.7rem;
+        color: var(--text-secondary);
+        font-weight: bold;
+      }
+
+      /* 返却期限超過 */
       .badge-urgent {
         background-color: #fee2e2;
         color: #ef4444;
@@ -404,7 +549,7 @@
         color: #fca5a5;
       }
 
-      /* トグル風読了スイッチ */
+      /* トグルボタン */
       .status-button {
         border: 1px solid var(--border-color);
         background-color: var(--bg-app);
@@ -471,7 +616,7 @@
         color: var(--text-secondary);
       }
 
-      /* フォーム関連 */
+      /* フォーム */
       form {
         display: flex;
         flex-direction: column;
@@ -507,6 +652,116 @@
 
       input:focus, select:focus {
         border-color: var(--accent);
+      }
+
+      /* A8/ASP用ハイブリッド広告枠エリア */
+      .a8-sponsored-block {
+        background-color: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius);
+        padding: 16px;
+        margin-top: 16px;
+        box-shadow: var(--shadow);
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .a8-ad-label {
+        font-size: 0.65rem;
+        color: var(--accent);
+        font-weight: bold;
+        letter-spacing: 0.05em;
+      }
+
+      /* 自由にA8のコードを上書きできるコンテナ */
+      .a8-ad-container-outer {
+        width: 100%;
+      }
+
+      .a8-ad-content {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        text-decoration: none;
+        color: inherit;
+      }
+
+      .a8-ad-content img {
+        width: 80px;
+        height: 80px;
+        object-fit: cover;
+        border-radius: 6px;
+        border: 1px solid var(--border-color);
+      }
+
+      .a8-ad-text {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+
+      .a8-ad-title {
+        font-size: 0.85rem;
+        font-weight: bold;
+        line-height: 1.3;
+      }
+
+      .a8-ad-desc {
+        font-size: 0.7rem;
+        color: var(--text-secondary);
+        line-height: 1.2;
+      }
+
+      /* 常時表示：Google AdSenseアンカーバナー広告（ナビゲーションの上に配置） */
+      .adsense-anchor-banner {
+        position: fixed;
+        bottom: 70px; /* タブバーの上に密着表示 */
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100%;
+        max-width: 480px;
+        background-color: var(--bg-card);
+        border-top: 1px solid var(--border-color);
+        border-bottom: 1px solid var(--border-color);
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 99;
+        box-shadow: 0 -2px 10px rgba(0,0,0,0.02);
+      }
+
+      .adsense-banner-content {
+        font-size: 0.7rem;
+        color: var(--text-secondary);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        line-height: 1.3;
+      }
+
+      .adsense-close-btn {
+        position: absolute;
+        right: 8px;
+        top: 4px;
+        background: none;
+        border: none;
+        font-size: 0.8rem;
+        color: var(--text-secondary);
+        cursor: pointer;
+        padding: 4px;
+      }
+
+      /* プレミアム（広告非表示状態）が有効になった時のCSSクラス */
+      body.premium-mode .adsense-anchor-banner,
+      body.premium-mode .a8-sponsored-block {
+        display: none !important;
+      }
+
+      body.premium-mode .app-shell {
+        padding-bottom: 90px; /* 広告が消えた分、少し余白をスッキリさせる */
       }
 
       /* ナビゲーションタブ */
@@ -554,57 +809,6 @@
       .tab.is-active {
         color: var(--accent);
       }
-
-      /* フューチャーリスト */
-      .future-list {
-        list-style: none;
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-        padding: 12px;
-        background-color: var(--bg-card);
-        border-radius: var(--radius);
-        border: 1px solid var(--border-color);
-      }
-
-      .future-list li {
-        font-size: 0.8rem;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-      }
-
-      .future-list li::before {
-        content: "•";
-        color: var(--accent);
-        font-weight: bold;
-      }
-
-      /* トースト通知 */
-      .toast {
-        position: fixed;
-        bottom: 85px;
-        left: 50%;
-        transform: translate(-50%, 20px);
-        background-color: var(--text-primary);
-        color: var(--bg-app);
-        padding: 10px 20px;
-        border-radius: 999px;
-        font-size: 0.8rem;
-        font-weight: bold;
-        opacity: 0;
-        visibility: hidden;
-        transition: transform 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
-        z-index: 200;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-        white-space: nowrap;
-      }
-
-      .toast.is-show {
-        transform: translate(-50%, 0);
-        opacity: 0.95;
-        visibility: visible;
-      }
     </style>
   </head>
   <body>
@@ -613,7 +817,10 @@
       <header class="topbar">
         <div>
           <p class="eyebrow">図書館で静かに取り返し中</p>
-          <h1>税金回収カウンター</h1>
+          <h1>
+            <img src="./icon.png" alt="アイコン" onerror="this.style.display='none';">
+            税金回収カウンター
+          </h1>
         </div>
         <button class="icon-button" id="themeToggle" type="button" aria-label="表示テーマを切り替え">◐</button>
       </header>
@@ -641,6 +848,10 @@
               <span id="rateDisplay">0%</span>
             </div>
           </div>
+          <!-- 収益化・バイラル加速のためのSNS拡散ボタン -->
+          <button class="share-button" id="xShareBtn" type="button">
+            𝕏 に回収成果をシェアする
+          </button>
         </article>
 
         <section class="metric-grid" aria-label="今月の集計">
@@ -662,7 +873,23 @@
           </article>
         </section>
 
-        <section class="section-block">
+        <!-- A8.net / ASP広告ハイブリッド表示枠 -->
+        <aside class="a8-sponsored-block" id="a8Block">
+          <span class="a8-ad-label">▼ 今月のおすすめ節税＆読書情報</span>
+          <!-- A8から貰った広告コード（自由枠） -->
+          <div class="a8-ad-container-outer" id="a8-ad-container">
+            <!-- 審査が通ったら、A8管理画面で取得したバナー・テキスト広告コード（HTML）をこの下にそのままコピペして上書きしてください -->
+            <a href="https://www.amazon.co.jp/music/unlimited" target="_blank" rel="noopener noreferrer" class="a8-ad-content">
+              <img src="https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=150&auto=format&fit=crop" alt="読書広告イメージ">
+              <div class="a8-ad-text">
+                <span class="a8-ad-title">本が聴き放題のAudibleを無料体験</span>
+                <span class="a8-ad-desc">通勤や家事の時間がすべて極上の読書タイムに。無料体験だけでおトクに知的好奇心を満たす！</span>
+              </div>
+            </a>
+          </div>
+        </aside>
+
+        <section class="section-block" style="margin-top: 24px;">
           <div class="section-heading">
             <h3>返却が近い本</h3>
             <span id="dueSummary">期限のある本はありません</span>
@@ -770,20 +997,59 @@
           <button class="primary-button" type="submit">保存</button>
         </form>
 
+        <!-- プレミアムプラン用：広告非表示設定エリア -->
         <section class="section-block">
           <div class="section-heading">
-            <h3>将来入れる機能</h3>
-            <span>次フェーズ予定</span>
+            <h3>プレミアム設定（広告非表示）</h3>
+            <span>課金ユーザー用アクティベーション</span>
           </div>
-          <ul class="future-list">
-            <li>ふるさと納税対応の住民税の自動計算</li>
-            <li>複数端末でのクラウドリアルタイム同期</li>
-            <li>返却期限前のスマホプッシュ通知</li>
-            <li>気に入った本のワンタップ購入リンク</li>
-          </ul>
+          <div style="background-color: var(--bg-card); padding: 20px; border-radius: var(--radius); border: 1px solid var(--border-color); display: flex; flex-direction: column; gap: 12px;">
+            <p style="font-size: 0.8rem; line-height: 1.4;">プレミアムキーを入力すると、全ての広告（AdSense、A8特設枠）が永久に非表示になります。</p>
+            <label style="color: var(--text-primary);">
+              プレミアムキー
+              <input id="premiumKeyInput" placeholder="シークレットコードを入力" style="margin-top: 4px;" />
+            </label>
+            <button class="status-button" id="premiumBtn" type="button" style="width: 100%; padding: 12px; border-radius: var(--radius);">キーを適用する</button>
+            <p id="premiumStatusText" style="font-size: 0.75rem; text-align: center; color: var(--text-secondary);"></p>
+          </div>
+        </section>
+
+        <!-- 𝕏 (Twitter) 公式アカウントへの案内エリア -->
+        <section class="section-block">
+          <div class="section-heading">
+            <h3>公式SNS・サポート</h3>
+            <span>最新アップデート情報はこちらから</span>
+          </div>
+          <div style="background-color: var(--bg-card); padding: 20px; border-radius: var(--radius); border: 1px solid var(--border-color); display: flex; flex-direction: column; gap: 8px;">
+            <p style="font-size: 0.8rem; line-height: 1.4;">「税金回収カウンター」の公式𝕏アカウントを開設しました！新機能の要望やバグレポートなどもこちらで受け付けています。</p>
+            <a href="https://x.com/zeikinzero_" target="_blank" rel="noopener noreferrer" class="x-follow-button">
+              𝕏 @zeikinzero_ をフォローする
+            </a>
+          </div>
+        </section>
+
+        <section class="section-block">
+          <div class="section-heading">
+            <h3>アソシエイト設定（デベロッパー用）</h3>
+            <span>アフィリエイトIDの指定</span>
+          </div>
+          <div style="background-color: var(--bg-card); padding: 16px; border-radius: var(--radius); border: 1px solid var(--border-color); font-size: 0.8rem; display: flex; flex-direction: column; gap: 8px;">
+            <p><strong>AmazonアソシエイトID:</strong></p>
+            <p style="font-family: monospace; color: var(--accent); font-weight: bold; font-size: 1rem;" id="assocIdDisplay">mojimojimoji-22</p>
+            <p style="color: var(--text-secondary); font-size: 0.75rem;">※コード内で設定したあなた専用のIDが正しく反映されています。</p>
+          </div>
         </section>
       </section>
     </main>
+
+    <!-- 常時表示：Google AdSenseアンカーバナー広告（擬似プレースホルダー） -->
+    <aside class="adsense-anchor-banner" id="adsenseBanner">
+      <button class="adsense-close-btn" id="closeAdBtn" aria-label="広告を閉じる">×</button>
+      <div class="adsense-banner-content">
+        <span style="font-size: 0.55rem; letter-spacing: 0.05em; opacity: 0.5;">SPONSORED BY GOOGLE ADSENSE</span>
+        <span style="font-weight: bold; font-size: 0.75rem; color: var(--accent);">節税対策はできていますか？賢いふるさと納税を徹底分析</span>
+      </div>
+    </aside>
 
     <!-- フッターナビゲーション -->
     <nav class="tabbar" aria-label="メインナビゲーション">
@@ -798,14 +1064,20 @@
 
     <!-- アプリケーションロジック -->
     <script>
-      // 起動準備
+      // --- アソシエイトIDの設定（ご指定のトラッキングIDを組み込みました） ---
+      const AMAZON_ASSOCIATE_ID = "mojimojimoji-22";
+      
+      // 広告非表示を解除する秘密コード（Stripe等で課金した人に自動発行する設定）
+      const PREMIUM_UNLOCK_CODE = "ADFREE2026";
+
       document.addEventListener('DOMContentLoaded', () => {
         // --- アプリケーション状態(State) ---
         let state = {
           settings: {
             monthlyTax: 15000,
             loanDays: 14,
-            style: 'library'
+            style: 'library',
+            isPremium: false // 広告非表示モード
           },
           theme: 'light',
           books: [],
@@ -814,13 +1086,11 @@
 
         // --- 初期化 ---
         const init = () => {
-          // 本日の年・月を初期設定
           const today = new Date();
           const yyyy = today.getFullYear();
           const mm = String(today.getMonth() + 1).padStart(2, '0');
           state.currentMonth = `${yyyy}-${mm}`;
 
-          // ローカルストレージからのロード
           const savedState = localStorage.getItem('tax_recovery_state');
           if (savedState) {
             try {
@@ -833,18 +1103,36 @@
             }
           }
 
-          // UIに初期値を反映
           document.body.setAttribute('data-theme', state.theme);
           document.body.setAttribute('data-style', state.settings.style);
           
           document.getElementById('taxInput').value = state.settings.monthlyTax;
           document.getElementById('loanDaysInput').value = state.settings.loanDays;
 
+          // プレミアム状態のUI反映
+          applyPremiumStatus();
+
           updateStyleButtons();
           renderAll();
-          
-          // 登録画面の初期返却期限のセット
           setDefaultDueDate();
+        };
+
+        // --- プレミアムモード（広告非表示）の適用 ---
+        const applyPremiumStatus = () => {
+          const premiumInput = document.getElementById('premiumKeyInput');
+          const statusText = document.getElementById('premiumStatusText');
+
+          if (state.settings.isPremium) {
+            document.body.classList.add('premium-mode');
+            premiumInput.value = PREMIUM_UNLOCK_CODE;
+            premiumInput.disabled = true;
+            statusText.textContent = "✓ プレミアムプラン適用中（広告は完全に非表示です）";
+            statusText.style.color = "var(--accent)";
+          } else {
+            document.body.classList.remove('premium-mode');
+            statusText.textContent = "※お試しシークレットキー：ADFREE2026";
+            statusText.style.color = "var(--text-secondary)";
+          }
         };
 
         // --- データの永続化 ---
@@ -866,7 +1154,7 @@
           }, 3000);
         };
 
-        // --- 今日を起算日としたデフォルト返却期限の設定 ---
+        // --- デフォルト返却期限の設定 ---
         const setDefaultDueDate = () => {
           const loanDays = parseInt(state.settings.loanDays) || 14;
           const today = new Date();
@@ -883,17 +1171,14 @@
         const renderAll = () => {
           const booksInMonth = state.books.filter(b => b.month === state.currentMonth);
           
-          // 表示文字列（2026年06月など）
           const [year, month] = state.currentMonth.split('-');
           const monthText = `${year}年${parseInt(month)}月`;
           document.getElementById('dashboardTitle').textContent = monthText;
           document.getElementById('shelfTitle').textContent = monthText;
 
-          // ダッシュボード更新
           const monthlyTax = state.settings.monthlyTax;
           document.getElementById('monthlyTaxDisplay').textContent = `¥${monthlyTax.toLocaleString()}`;
 
-          // 借りた額・読了額・冊数
           const borrowedSum = booksInMonth.reduce((sum, b) => sum + b.price, 0);
           const readSum = booksInMonth.filter(b => b.status === 'read').reduce((sum, b) => sum + b.price, 0);
           
@@ -901,7 +1186,6 @@
           document.getElementById('readTotal').textContent = `¥${readSum.toLocaleString()}`;
           document.getElementById('borrowedCount').textContent = `${booksInMonth.length}冊`;
 
-          // メッセージとゲージ計算
           const messageSpan = document.getElementById('monthlyMessage');
           if (monthlyTax <= 0) {
             messageSpan.textContent = '設定タブから月額住民税を登録してください。';
@@ -912,26 +1196,33 @@
             messageSpan.textContent = `あと ¥${diff.toLocaleString()} で回収完了です。`;
           }
 
-          // ゲージ反映
           const recoveryRate = monthlyTax > 0 ? Math.min(Math.round((readSum / monthlyTax) * 100), 100) : 0;
           document.getElementById('gaugeFill').style.width = `${recoveryRate}%`;
           document.getElementById('recoveredDisplay').textContent = `¥${readSum.toLocaleString()} 回収`;
           document.getElementById('rateDisplay').textContent = `${recoveryRate}%`;
 
-          // 年間回収率計算
+          // 年間回収率
           const currentYear = year;
           const booksInYear = state.books.filter(b => b.month.startsWith(currentYear));
           const yearReadSum = booksInYear.filter(b => b.status === 'read').reduce((sum, b) => sum + b.price, 0);
-          const yearTaxSum = monthlyTax * 12; // 年間の概算枠
+          const yearTaxSum = monthlyTax * 12;
           const yearRate = yearTaxSum > 0 ? Math.min(Math.round((yearReadSum / yearTaxSum) * 100), 100) : 0;
           document.getElementById('yearRate').textContent = `${yearRate}%`;
 
-          // 本棚とダッシュボード用期限間近リスト
           renderShelfList(booksInMonth);
           renderDueList();
         };
 
-        // 本棚リストの描画
+        // アフィリエイト用Amazon書籍リンクの生成
+        const generateAmazonUrl = (title, isbn) => {
+          if (isbn) {
+            const cleanIsbn = isbn.replace(/-/g, '').trim();
+            return `https://www.amazon.co.jp/s?k=${cleanIsbn}&tag=${AMAZON_ASSOCIATE_ID}`;
+          }
+          return `https://www.amazon.co.jp/s?k=${encodeURIComponent(title)}&tag=${AMAZON_ASSOCIATE_ID}`;
+        };
+
+        // 本棚リストの描画（アフィリエイト行の追加 & プランB仕様）
         const renderShelfList = (books) => {
           const listContainer = document.getElementById('bookList');
           document.getElementById('shelfSummary').textContent = `${books.length}冊`;
@@ -945,37 +1236,49 @@
             const isRead = book.status === 'read';
             const badge = book.dueDate ? getDueBadge(book.dueDate) : '';
             const dueDateText = book.dueDate ? `期限: ${book.dueDate.replace(/-/g, '/')}` : '期限: なし';
+            
+            const amazonLink = generateAmazonUrl(book.title, book.isbn);
+
+            // isRead の場合は、カードに is-read-mode クラスを付与しAmazonボタンがスライドイン表示されます。
             return `
-              <div class="book-card" data-id="${book.id}">
-                <div class="book-info">
-                  <span class="book-title">${escapeHTML(book.title)}</span>
-                  <div class="book-meta">
-                    <span>¥${book.price.toLocaleString()}</span>
-                    ${book.author ? `<span>${escapeHTML(book.author)}</span>` : ''}
-                    <span>${dueDateText}</span> ${badge}
+              <div class="book-card ${isRead ? 'is-read-mode' : ''}" data-id="${book.id}">
+                <div class="book-main-row">
+                  <div class="book-info">
+                    <span class="book-title">${escapeHTML(book.title)}</span>
+                    <div class="book-meta">
+                      <span>¥${book.price.toLocaleString()}</span>
+                      ${book.author ? `<span>${escapeHTML(book.author)}</span>` : ''}
+                      <span>${dueDateText}</span> ${badge}
+                    </div>
+                  </div>
+                  <div class="book-actions">
+                    <button class="status-button ${isRead ? 'is-read' : ''}" onclick="toggleBookStatus('${book.id}')">
+                      ${isRead ? '読了' : '未読'}
+                    </button>
+                    <button class="delete-button" onclick="deleteBook('${book.id}')" aria-label="削除">🗑️</button>
                   </div>
                 </div>
-                <div class="book-actions">
-                  <button class="status-button ${isRead ? 'is-read' : ''}" onclick="toggleBookStatus('${book.id}')">
-                    ${isRead ? '読了' : '未読'}
-                  </button>
-                  <button class="delete-button" onclick="deleteBook('${book.id}')" aria-label="削除">🗑️</button>
+                <!-- 収益化プランB：読了時のみ出現するAmazonアソシエイト枠 -->
+                <div class="book-monetize-row">
+                  <span class="monetize-text">気に入ったら紙・Kindleで購入：</span>
+                  <a href="${amazonLink}" target="_blank" rel="noopener noreferrer" class="amazon-btn">
+                    🛒 Amazonで見る
+                  </a>
                 </div>
               </div>
             `;
           }).join('');
         };
 
-        // 返却間近の本のリスト描画
+        // 返却期限超過
         const renderDueList = () => {
           const dueContainer = document.getElementById('dueList');
           const summarySpan = document.getElementById('dueSummary');
 
-          // 全ての本の中から未読かつ期限あり、期限が近いもの
           const dueBooks = state.books
             .filter(b => b.status === 'borrowed' && b.dueDate)
             .sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate))
-            .slice(0, 3); // 最大3件
+            .slice(0, 3);
 
           if (dueBooks.length === 0) {
             summarySpan.textContent = '現在、返却期限のある本はありません';
@@ -988,22 +1291,24 @@
             const badge = getDueBadge(book.dueDate);
             return `
               <div class="book-card" style="padding: 10px 14px;">
-                <div class="book-info">
-                  <span class="book-title" style="font-size: 0.85rem;">${escapeHTML(book.title)}</span>
-                  <div class="book-meta">
-                    <span>期限: ${book.dueDate.replace(/-/g, '/')}</span>
-                    ${badge}
+                <div class="book-main-row">
+                  <div class="book-info">
+                    <span class="book-title" style="font-size: 0.85rem;">${escapeHTML(book.title)}</span>
+                    <div class="book-meta">
+                      <span>期限: ${book.dueDate.replace(/-/g, '/')}</span>
+                      ${badge}
+                    </div>
                   </div>
+                  <button class="status-button" onclick="toggleBookStatus('${book.id}')">
+                    読了
+                  </button>
                 </div>
-                <button class="status-button" onclick="toggleBookStatus('${book.id}')">
-                  読了にする
-                </button>
               </div>
             `;
           }).join('');
         };
 
-        // 返却期限に応じたバッジを生成
+        // 期限バッジ
         const getDueBadge = (dueDateStr) => {
           if (!dueDateStr) return '';
           const today = new Date();
@@ -1022,7 +1327,6 @@
           return '';
         };
 
-        // HTMLエスケープ
         const escapeHTML = (str) => {
           if (!str) return '';
           return str.replace(/[&<>'"]/g, 
@@ -1030,7 +1334,7 @@
           );
         };
 
-        // --- グローバル公開する操作関数（onclickから呼ぶ用） ---
+        // --- グローバル公開する操作関数 ---
         window.toggleBookStatus = (id) => {
           state.books = state.books.map(b => {
             if (b.id === id) {
@@ -1070,14 +1374,13 @@
             const targetView = document.getElementById(`view-${tab.dataset.tab}`);
             if (targetView) targetView.classList.add('is-active');
 
-            // 「登録」画面を開いた時に返却期限を再計算して初期セット
             if (tab.dataset.tab === 'scan') {
               setDefaultDueDate();
             }
           });
         });
 
-        // 月移動 (ダッシュボード用 & 本棚用)
+        // 月移動
         const changeMonth = (offset) => {
           const [year, month] = state.currentMonth.split('-').map(Number);
           const date = new Date(year, month - 1 + offset, 1);
@@ -1121,7 +1424,7 @@
           });
         });
 
-        // ISBN 検索（OpenBD API）
+        // ISBN 検索
         const isbnForm = document.getElementById('isbnForm');
         const searchBtn = document.getElementById('isbnSearchBtn');
 
@@ -1147,7 +1450,6 @@
               document.getElementById('titleInput').value = info.title || '';
               document.getElementById('authorInput').value = info.author || '';
               
-              // 価格の抽出
               let price = 0;
               const opds = data[0].onix;
               if (opds && opds.ProductSupply && opds.ProductSupply.SupplyDetail && opds.ProductSupply.SupplyDetail.Price) {
@@ -1160,9 +1462,7 @@
               document.getElementById('hiddenIsbn').value = info.isbn || '';
               document.getElementById('lookupSource').textContent = `「${info.title}」を読み込みました`;
 
-              // ISBN検索時も、今日の日付から起算して標準返却期間をセット
               setDefaultDueDate();
-
               showToast('書籍情報を取得しました！');
             } else {
               showToast('書籍情報が見つかりませんでした。');
@@ -1184,7 +1484,7 @@
           const title = document.getElementById('titleInput').value.trim();
           const price = parseInt(document.getElementById('priceInput').value) || 0;
           const author = document.getElementById('authorInput').value.trim();
-          const dueDate = document.getElementById('dueInput').value; // 空欄でも可
+          const dueDate = document.getElementById('dueInput').value;
           const isbn = document.getElementById('hiddenIsbn').value;
 
           const newBook = {
@@ -1192,28 +1492,23 @@
             title,
             price,
             author,
-            dueDate, // 任意
+            dueDate,
             isbn,
-            status: 'borrowed', // デフォルトは未読(借りた状態)
-            month: state.currentMonth // 表示中の月に追加する
+            status: 'borrowed',
+            month: state.currentMonth
           };
 
           state.books.push(newBook);
           saveToStorage();
           renderAll();
 
-          // フォーム初期化
           bookForm.reset();
           document.getElementById('isbnForm').reset();
           document.getElementById('lookupSource').textContent = '手入力でも登録できます';
           document.getElementById('hiddenIsbn').value = '';
           
-          // 再度デフォルトの返却期限をセット
           setDefaultDueDate();
-
           showToast('本棚に新しく本を登録しました！');
-
-          // ダッシュボードへ自動遷移
           document.querySelector('.tab[data-tab="dashboard"]').click();
         });
 
@@ -1230,12 +1525,55 @@
 
           saveToStorage();
           renderAll();
-          
-          // 設定が変更されたら、登録フォームのデフォルト返却期限も更新
           setDefaultDueDate();
 
           showToast('設定を保存しました。');
           document.querySelector('.tab[data-tab="dashboard"]').click();
+        });
+
+        // --- プレミアムコード（広告非表示）適用ロジック ---
+        document.getElementById('premiumBtn').addEventListener('click', () => {
+          const inputVal = document.getElementById('premiumKeyInput').value.trim();
+
+          if (inputVal === PREMIUM_UNLOCK_CODE) {
+            state.settings.isPremium = true;
+            saveToStorage();
+            applyPremiumStatus();
+            showToast('おめでとうございます！プレミアムプランが有効化されました。');
+            renderAll();
+          } else if (inputVal === "") {
+            state.settings.isPremium = false;
+            saveToStorage();
+            applyPremiumStatus();
+            showToast('プレミアムプランを解除しました。');
+            renderAll();
+          } else {
+            showToast('無効なシークレットキーです。');
+          }
+        });
+
+        // 擬似AdSense広告の閉じるボタン（無料ユーザーでも一時的に非表示にできる仕様）
+        document.getElementById('closeAdBtn').addEventListener('click', (e) => {
+          e.stopPropagation();
+          document.getElementById('adsenseBanner').style.display = 'none';
+          document.querySelector('.app-shell').style.paddingBottom = '90px';
+          showToast('広告を一時的に非表示にしました。（プレミアムキー入力で永続的に非表示にできます）');
+        });
+
+        // --- バイラル拡散（𝕏 で成果シェア）ボタン ---
+        document.getElementById('xShareBtn').addEventListener('click', () => {
+          const booksInMonth = state.books.filter(b => b.month === state.currentMonth);
+          const readSum = booksInMonth.filter(b => b.status === 'read').reduce((sum, b) => sum + b.price, 0);
+          const monthlyTax = state.settings.monthlyTax;
+          const rate = monthlyTax > 0 ? Math.min(Math.round((readSum / monthlyTax) * 100), 100) : 0;
+          
+          const currentUrl = window.location.href;
+          
+          // ツイート内容に𝕏の公式メンションを追加し、アカウントにユーザーが気づきやすくしました
+          const shareText = `【税金回収カウンター】\n今月の住民税を ${rate}%（${readSum.toLocaleString()}円分）回収しました！\n図書館で読んだ本を記録して、賢く住民税を取り戻そう！\n\nby @zeikinzero_ #税金回収カウンター #読書\n`;
+          const xUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(currentUrl)}`;
+          
+          window.open(xUrl, '_blank', 'width=550,height=420');
         });
 
         // 起動処理
