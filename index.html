@@ -7,7 +7,7 @@
     <title>税金回収カウンター</title>
 
     <!-- Google AdSense 審査・自動広告配信タグ -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5682898371122354"
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXX"
      crossorigin="anonymous"></script>
 
     <!-- アプリアイコン設定 -->
@@ -432,7 +432,7 @@
         color: var(--text-secondary);
       }
 
-      /* 本のリスト & 追加時のレイアウト崩れ対策（改修箇所） */
+      /* 本のリスト & 追加時のレイアウト崩れ対策 */
       .book-list {
         display: flex;
         flex-direction: column;
@@ -805,6 +805,59 @@
       .tab.is-active {
         color: var(--accent);
       }
+
+      /* プライバシーポリシーの開閉装飾（追加CSS） */
+      .policy-details {
+        background-color: var(--bg-app);
+        border-radius: var(--radius);
+        border: 1px solid var(--border-color);
+        overflow: hidden;
+      }
+
+      .policy-summary {
+        padding: 14px;
+        font-size: 0.85rem;
+        font-weight: bold;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        outline: none;
+        list-style: none; /* デフォルトの三角を消す */
+      }
+
+      .policy-summary::-webkit-details-marker {
+        display: none; /* Safari用の三角消し */
+      }
+
+      .policy-summary::after {
+        content: "▼";
+        font-size: 0.75rem;
+        color: var(--text-secondary);
+        transition: transform 0.2s ease;
+      }
+
+      .policy-details[open] .policy-summary::after {
+        transform: rotate(180deg);
+      }
+
+      .policy-content {
+        padding: 0 14px 14px 14px;
+        font-size: 0.75rem;
+        line-height: 1.5;
+        color: var(--text-secondary);
+        border-top: 1px dashed var(--border-color);
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .policy-title {
+        font-weight: bold;
+        color: var(--text-primary);
+        margin-top: 8px;
+        display: block;
+      }
     </style>
   </head>
   <body>
@@ -844,10 +897,18 @@
               <span id="rateDisplay">0%</span>
             </div>
           </div>
-          <!-- SNS拡散ボタン -->
-          <button class="share-button" id="xShareBtn" type="button">
-            𝕏 に回収成果をシェアする
-          </button>
+          <!-- SNS拡散ボタン（𝕏, Threads, Instagram連携） -->
+          <div class="share-buttons-group" style="display: flex; flex-direction: column; gap: 8px; margin-top: 12px; width: 100%;">
+            <button class="share-button" id="xShareBtn" type="button" style="margin-top: 0;">
+              𝕏 に成果をシェア
+            </button>
+            <button class="share-button" id="threadsShareBtn" type="button" style="background-color: #000000; color: #ffffff; margin-top: 0;">
+              Threads に成果をシェア
+            </button>
+            <button class="share-button" id="instaCopyBtn" type="button" style="background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); color: #ffffff; margin-top: 0;">
+              Instagram紹介文をコピー
+            </button>
+          </div>
         </article>
 
         <section class="metric-grid" aria-label="今月の集計">
@@ -876,7 +937,7 @@
             <a href="https://www.amazon.co.jp/music/unlimited" target="_blank" rel="noopener noreferrer" class="a8-ad-content">
               <img src="https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=150&auto=format&fit=crop" alt="読書広告イメージ">
               <div class="a8-ad-text">
-                <span class="a8-ad-title">本が聴き放題のAudibleを無料体験</span>
+                <span class="a8-ad-title">本が聴き放題 of Audibleを無料体験</span>
                 <span class="a8-ad-desc">通勤や家事の時間がすべて極上の読書タイムに。おトクに知的好奇心を満たす！</span>
               </div>
             </a>
@@ -999,10 +1060,34 @@
           </div>
           <div style="background-color: var(--bg-card); padding: 20px; border-radius: var(--radius); border: 1px solid var(--border-color); display: flex; flex-direction: column; gap: 8px;">
             <p style="font-size: 0.8rem; line-height: 1.4;">「税金回収カウンター」の公式𝕏アカウントを開設しました！最新情報や機能要望はこちらへどうぞ。</p>
-            <a href="https://x.com/zeikinzero" target="_blank" rel="noopener noreferrer" class="x-follow-button">
-              𝕏 @zeikinzero をフォローする
+            <a href="https://x.com/zeikinzero_" target="_blank" rel="noopener noreferrer" class="x-follow-button">
+              𝕏 @zeikinzero_ をフォローする
             </a>
           </div>
+        </section>
+
+        <!-- 【新規追加】アコーディオン式プライバシーポリシー・免責事項 -->
+        <section class="section-block">
+          <div class="section-heading">
+            <h3>法的表記・情報管理</h3>
+            <span>安心してお使いいただくために</span>
+          </div>
+          <details class="policy-details">
+            <summary class="policy-summary">プライバシーポリシー・免責事項はこちら ▼</summary>
+            <div class="policy-content">
+              <span class="policy-title">■ 免責事項</span>
+              <p>※本アプリにおけるシミュレーション結果（借りた本の価格合計等）は住民税の回収度合いを視覚化する目安であり、実際の納税額を軽減または確定・保証するものではありません。正確な税額に関しては各自治体の窓口や税理士にお問い合わせください。</p>
+              
+              <span class="policy-title">■ アフィリエイト広告について</span>
+              <p>税金回収カウンターは、Amazon.co.jpを宣伝しリンクすることによってサイトが紹介料を獲得できる手段を提供することを目的に設定されたアフィリエイトプログラムである、Amazonアソシエイト・プログラムの参加者です。</p>
+              
+              <span class="policy-title">■ Google AdSense広告について</span>
+              <p>当アプリ（ウェブサイト）では広告配信サービス「Google AdSense」を利用して広告を表示しています。広告配信事業者はユーザーの関心に合わせた最適な広告を提供するため、アクセスに関する情報（Cookie、但し個人特定情報は除く）を使用することがあります。</p>
+              
+              <span class="policy-title">■ データの保護・プライバシー</span>
+              <p>当アプリはユーザーが登録した本の情報や設定値をサーバー等には一切送信せず、お使いの端末（ブラウザのLocalStorage機能）に安全に保存する仕組みとなっています。個人情報の流出リスクはありませんので安心してご利用いただけます。</p>
+            </div>
+          </details>
         </section>
       </section>
     </main>
@@ -1160,7 +1245,7 @@
           return `https://www.amazon.co.jp/s?k=${encodeURIComponent(title)}&tag=${AMAZON_ASSOCIATE_ID}`;
         };
 
-        // 本棚リストの描画（レイアウト崩れ防止クラスの連動）
+        // 本棚リストの描画
         const renderShelfList = (books) => {
           const listContainer = document.getElementById('bookList');
           document.getElementById('shelfSummary').textContent = `${books.length}冊`;
@@ -1488,6 +1573,40 @@
           const xUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(currentUrl)}`;
           
           window.open(xUrl, '_blank', 'width=550,height=420');
+        });
+
+        // Threadsシェア
+        document.getElementById('threadsShareBtn').addEventListener('click', () => {
+          const booksInMonth = state.books.filter(b => b.month === state.currentMonth);
+          const readSum = booksInMonth.filter(b => b.status === 'read').reduce((sum, b) => sum + b.price, 0);
+          const monthlyTax = state.settings.monthlyTax;
+          const rate = monthlyTax > 0 ? Math.min(Math.round((readSum / monthlyTax) * 100), 100) : 0;
+          
+          const currentUrl = window.location.href;
+          const shareText = `【税金回収カウンター】\n今月の住民税を ${rate}%（${readSum.toLocaleString()}円分）回収しました！\n図書館で読んだ本を記録して、賢く住民税を取り戻そう！\n\nby @zeikinzero_ #税金回収カウンター #読書\n${currentUrl}`;
+          const threadsUrl = `https://www.threads.net/intent/post?text=${encodeURIComponent(shareText)}`;
+          
+          window.open(threadsUrl, '_blank');
+        });
+
+        // Instagram紹介テキストのコピー
+        document.getElementById('instaCopyBtn').addEventListener('click', () => {
+          const booksInMonth = state.books.filter(b => b.month === state.currentMonth);
+          const readSum = booksInMonth.filter(b => b.status === 'read').reduce((sum, b) => sum + b.price, 0);
+          const monthlyTax = state.settings.monthlyTax;
+          const rate = monthlyTax > 0 ? Math.min(Math.round((readSum / monthlyTax) * 100), 100) : 0;
+          
+          const currentUrl = window.location.href;
+          const shareText = `【税金回収カウンター】\n今月の住民税を ${rate}%（${readSum.toLocaleString()}円分）回収しました！\n図書館の本を記録して住民税を取り戻す完全無料アプリ。\nプロフィールのリンク（または以下URL）からすぐに使えます！\n\n#税金回収カウンター #読書 #ライフハック\n${currentUrl}`;
+          
+          const tempInput = document.createElement('textarea');
+          tempInput.value = shareText;
+          document.body.appendChild(tempInput);
+          tempInput.select();
+          document.execCommand('copy');
+          document.body.removeChild(tempInput);
+          
+          showToast('インスタ用の紹介文をコピーしました！ストーリー等に貼り付けて使ってください。');
         });
 
         // 起動
