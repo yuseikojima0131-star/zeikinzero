@@ -7,7 +7,7 @@
     <title>税金回収カウンター</title>
 
     <!-- ==========================================
-      【アクセス解析】Google Analytics (GA4)
+      【アクセス解析】Google Analytics (GA4) 高度連携
     ========================================== -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-HZE3814T60"></script>
     <script>
@@ -15,6 +15,15 @@
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
       gtag('config', 'G-HZE3814T60');
+
+      // 汎用カスタムイベント配信用ヘルパー関数
+      function logAppEvent(eventName, params = {}) {
+        try {
+          gtag('event', eventName, params);
+        } catch (e) {
+          console.error("GA4 Event Log Error:", e);
+        }
+      }
     </script>
 
     <!-- ==========================================
@@ -1071,7 +1080,7 @@
       <!-- ビュー: ダッシュボード -->
       <section class="view is-active" id="view-dashboard" aria-labelledby="dashboardTitle">
         
-        <!-- 生涯回収アワード（新設） -->
+        <!-- 生涯回収アワード -->
         <div class="lifetime-panel" id="lifetimePanel">
           <div class="lifetime-info">
             <span class="lifetime-label">生涯通算回収実績</span>
@@ -1139,14 +1148,14 @@
         <aside class="recommended-pr-block" id="recommendedPr">
           <span class="pr-label">▼ 今月のおすすめ読書情報（PR）</span>
           
-          <a href="https://www.amazon.co.jp/b?node=7471076051&linkCode=ll2&tag=kojikojiy07-22&linkId=ee0b4b734f384e3ea7cd5d8bb26aa06e&ref_=as_li_ss_tl" target="_blank" rel="nofollow noopener" class="pr-link-item">
+          <a href="https://www.amazon.co.jp/b?node=7471076051&linkCode=ll2&tag=kojikojiy07-22&linkId=ee0b4b734f384e3ea7cd5d8bb26aa06e&ref_=as_li_ss_tl" id="audibleBannerLink" target="_blank" rel="nofollow noopener" class="pr-link-item">
             <span class="pr-caption">満員電車でも読書可能！耳からの読書はこちらから ⇓</span>
             <div class="pr-image-wrapper">
               <img src="audible_720x90._CB1198675309_.jpg" alt="Audible 30日間無料体験" onerror="this.src='https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=480&auto=format&fit=crop&q=60'">
             </div>
           </a>
 
-          <a href="https://www.amazon.co.jp/kindle-dbs/hz/signup?tag=kojikojiy07-22" target="_blank" rel="nofollow noopener" class="pr-link-item" style="margin-top: 8px;">
+          <a href="https://www.amazon.co.jp/kindle-dbs/hz/signup?tag=kojikojiy07-22" id="kindleBannerLink" target="_blank" rel="nofollow noopener" class="pr-link-item" style="margin-top: 8px;">
             <span class="pr-caption">雑誌など電子書籍の読み放題はこちらから ⇓</span>
             <div class="pr-image-wrapper">
               <img src="KU-Assocb-2017810-640x100._V518059506_.jpg" alt="Kindle Unlimited 30日間無料体験" onerror="this.src='https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=480&auto=format&fit=crop&q=60'">
@@ -1233,20 +1242,20 @@
       <!-- ビュー: 本棚 -->
       <section class="view" id="view-shelf" aria-labelledby="shelfTitle">
         
-        <!-- 【新設】「今月」と「全履歴」の表示トグル -->
+        <!-- 「今月」と「全履歴」の表示トグル -->
         <div class="history-toggle-container">
           <button class="history-toggle-btn is-active" id="btnShelfMonth" type="button">今月の本棚</button>
           <button class="history-toggle-btn" id="btnShelfAll" type="button">全履歴ストック</button>
         </div>
 
-        <!-- カレンダー月切替（今月モードの時だけ表示される） -->
+        <!-- カレンダー月切替 -->
         <div class="month-switcher" id="shelfMonthSwitcher">
           <button class="ghost-button" id="shelfPrevMonth" type="button">‹</button>
           <h2 id="shelfTitle">2026年6月</h2>
           <button class="ghost-button" id="shelfNextMonth" type="button">›</button>
         </div>
 
-        <!-- 【新設】検索・並び替え・絞り込みコントロール -->
+        <!-- 検索・並び替え・絞り込みコントロール -->
         <div class="shelf-controls">
           <div class="shelf-search-row">
             <input type="text" id="shelfSearch" class="shelf-search-input" placeholder="タイトルや著者で検索...">
@@ -1308,8 +1317,8 @@
           </div>
           <div style="background-color: var(--bg-card); padding: 20px; border-radius: var(--radius); border: 1px solid var(--border-color); display: flex; flex-direction: column; gap: 8px;">
             <p style="font-size: 0.8rem; line-height: 1.4;">「税金回収カウンター」の公式𝕏アカウントを開設しました！最新情報や機能要望はこちらへどうぞ。</p>
-            <a href="https://x.com/zeikinzero" target="_blank" rel="noopener noreferrer" class="x-follow-button">
-              𝕏 @zeikinzero をフォローする
+            <a href="https://x.com/zeikinzero_" id="xFollowLink" target="_blank" rel="noopener noreferrer" class="x-follow-button">
+              𝕏 @zeikinzero_ をフォローする
             </a>
           </div>
         </section>
@@ -1327,7 +1336,7 @@
               <p>※本アプリにおけるシミュレーション結果（借りた本の価格合計等）は住民税の回収度合いを視覚化する目安であり、実際の納税額を軽減または確定・保証するものではありません。正確な税額に関しては各自治体の窓口や税理士にお問い合わせください。</p>
               
               <span class="policy-title">■ アフィリエイト広告について</span>
-              <p>税金回収カウンターは、Amazon.co.jpを宣伝しリンクすることによってサイトが紹介料を獲得できる手段を提供することを目的に設定されたアフィリエイトプログラムである、Amazonアソシエイト・プログラムの参加者です。</p>
+              <p>税金回収カウンターは、Amazon.co.jpを宣伝しリンクすることによってサイトが紹介料を獲得できる手段を提供することを目的に設定されたアフィリエイトプログラムである、Amazonアソシエイト・プログラム of の参加者です。</p>
               
               <span class="policy-title">■ アクセス解析・Google AdSenseについて</span>
               <p>当アプリではアクセス状況の測定に「Google Analytics」を使用し、広告配信に「Google AdSense」を利用しています。これらはデータ収集や広告最適化のためにCookieを使用しますが、匿名で収集されており個人を特定するものではありません。</p>
@@ -1347,7 +1356,7 @@
         <span style="font-size: 0.55rem; letter-spacing: 0.05em; opacity: 0.5; margin-bottom: 2px;">SPONSORED BY RAKUTEN</span>
         
         <div style="max-height: 44px; display: flex; align-items: center; justify-content: center; overflow: hidden;">
-          <a href="https://hb.afl.rakuten.co.jp/hsc/54e0d60f.ca92b7fe.3436da18.fed274eb/?link_type=pict&ut=eyJwYWdlIjoic2hvcCIsInR5cGUiOiJwaWN0IiwiY29sIjoxLCJjYXQiOiIxMDMiLCJiYW4iOjE1NjQ2MTMsImFtcCI6ZmFsc2V9" target="_blank" rel="nofollow sponsored noopener" style="word-wrap:break-word; display: block; line-height: 0;">
+          <a href="https://hb.afl.rakuten.co.jp/hsc/54e0d60f.ca92b7fe.3436da18.fed274eb/?link_type=pict&ut=eyJwYWdlIjoic2hvcCIsInR5cGUiOiJwaWN0IiwiY29sIjoxLCJjYXQiOiIxMDMiLCJiYW4iOjE1NjQ2MTMsImFtcCI6ZmFsc2V9" id="rakutenBannerLink" target="_blank" rel="nofollow sponsored noopener" style="word-wrap:break-word; display: block; line-height: 0;">
             <img src="https://hbb.afl.rakuten.co.jp/hsb/54e0d60f.ca92b7fe.3436da18.fed274eb/?me_id=1&me_adv_id=1564613&t=pict" border="0" style="margin:0; max-height: 40px; width: auto; object-fit: contain;" alt="楽天ふるさと納税" title="">
           </a>
         </div>
@@ -1418,6 +1427,9 @@
           updateStyleButtons();
           renderAll();
           setDefaultDueDate();
+
+          // 静的バナー等のイベント監視をバインド
+          bindStaticBannersAnalytics();
         };
 
         // --- 保存 ---
@@ -1490,7 +1502,7 @@
           document.getElementById('recoveredDisplay').textContent = `¥${readSum.toLocaleString()} 回収`;
           document.getElementById('rateDisplay').textContent = `${recoveryRate}%`;
 
-          // 【新設】生涯通算回収データの算出
+          // 生涯通算回収データの算出
           const totalReadBooks = state.books.filter(b => b.status === 'read');
           const totalReadSum = totalReadBooks.reduce((sum, b) => sum + b.price, 0);
           const preAddTax = parseInt(state.settings.preAddTax) || 0;
@@ -1548,22 +1560,18 @@
           // 並び替えソート処理
           targetBooks.sort((a, b) => {
             if (state.shelfSortKey === 'date_desc') {
-              // 登録日（借りた日）の新しい順。日付がない場合はIDで比較
               const dateA = a.borrowDate || '1970-01-01';
               const dateB = b.borrowDate || '1970-01-01';
               if (dateA !== dateB) return dateB.localeCompare(dateA);
               return b.id.localeCompare(a.id);
             } else if (state.shelfSortKey === 'date_asc') {
-              // 登録日が古い順
               const dateA = a.borrowDate || '1970-01-01';
               const dateB = b.borrowDate || '1970-01-01';
               if (dateA !== dateB) return dateA.localeCompare(dateB);
               return a.id.localeCompare(b.id);
             } else if (state.shelfSortKey === 'price_desc') {
-              // 価格の高い順
               return b.price - a.price;
             } else if (state.shelfSortKey === 'due_asc') {
-              // 返却期限の近い順（期限なしは一番後ろ）
               const dueA = a.dueDate || '9999-12-31';
               const dueB = b.dueDate || '9999-12-31';
               return dueA.localeCompare(dueB);
@@ -1618,7 +1626,7 @@
                 </div>
                 <div class="book-monetize-row">
                   <span class="monetize-text">手元に置きたくなったら購入：</span>
-                  <a href="${generateAmazonUrl(book.title, book.isbn)}" target="_blank" rel="noopener noreferrer" class="amazon-btn">🛒 Amazonで見る</a>
+                  <a href="${generateAmazonUrl(book.title, book.isbn)}" target="_blank" rel="noopener noreferrer" class="amazon-btn" onclick="trackAffiliateClick('amazon_book_detail', '${escapeJS(book.title)}')">🛒 Amazonで見る</a>
                 </div>
               </div>
             `;
@@ -1676,12 +1684,25 @@
           return str.replace(/[&<>'"]/g, tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag));
         };
 
-        // --- グローバル操作関数 ---
+        const escapeJS = (str) => {
+          if (!str) return '';
+          return str.replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/"/g, '\\"');
+        };
+
+        // --- 【分析機能付き】グローバル操作関数 ---
         window.toggleBookStatus = (id) => {
           state.books = state.books.map(b => {
             if (b.id === id) {
               const nextStatus = b.status === 'read' ? 'borrowed' : 'read';
-              if (nextStatus === 'read') showToast(`「${b.title}」を読了！回収額に加算されました。`);
+              if (nextStatus === 'read') {
+                showToast(`「${b.title}」を読了！回収額に加算されました。`);
+                // GA4: 読了完了イベント送信
+                logAppEvent('book_complete', {
+                  'book_title': b.title,
+                  'book_price': b.price,
+                  'lifetime_count': state.books.filter(x => x.status === 'read').length + 1
+                });
+              }
               return { ...b, status: nextStatus };
             }
             return b;
@@ -1690,21 +1711,56 @@
         };
 
         window.deleteBook = (id) => {
-          if (state.books.find(b => b.id === id)) {
+          const target = state.books.find(b => b.id === id);
+          if (target) {
+            // GA4: 削除イベント送信
+            logAppEvent('book_delete', {
+              'book_title': target.title,
+              'book_price': target.price
+            });
             state.books = state.books.filter(b => b.id !== id);
             saveToStorage(); renderAll(); showToast('本棚から本を削除しました。');
           }
         };
 
+        // アフィリエイトクリックスルーのGA4トラッキング関数
+        window.trackAffiliateClick = (targetName, detailLabel = '') => {
+          logAppEvent('affiliate_click', {
+            'click_target': targetName,
+            'detail_label': detailLabel
+          });
+        };
+
+        // 静的PRバナー・公式リンク用GA4トラッキング
+        const bindStaticBannersAnalytics = () => {
+          document.getElementById('audibleBannerLink').addEventListener('click', () => {
+            trackAffiliateClick('audible_pr', 'Audible 30日間無料体験バナー');
+          });
+          document.getElementById('kindleBannerLink').addEventListener('click', () => {
+            trackAffiliateClick('kindle_pr', 'Kindle Unlimited 無料体験バナー');
+          });
+          document.getElementById('rakutenBannerLink').addEventListener('click', () => {
+            trackAffiliateClick('rakuten_furusato', '楽天ふるさと納税固定バナー');
+          });
+          document.getElementById('xFollowLink').addEventListener('click', () => {
+            logAppEvent('social_follow', { 'social_platform': 'X_Twitter_Official' });
+          });
+        };
+
         // --- イベントリスナー ---
 
-        // タブ切り替え
+        // タブ切り替え監視 + GA4スクリーンビュー疑似測定
         document.querySelectorAll('.tab').forEach(tab => {
           tab.addEventListener('click', () => {
             document.querySelectorAll('.tab, .view').forEach(el => el.classList.remove('is-active'));
             tab.classList.add('is-active');
             document.getElementById(`view-${tab.dataset.tab}`).classList.add('is-active');
             if (tab.dataset.tab === 'scan') setDefaultDueDate();
+
+            // GA4: 仮想スクリーン（タブ）ビュー計測
+            logAppEvent('screen_view', {
+              'screen_name': tab.dataset.tab
+            });
           });
         });
 
@@ -1714,6 +1770,10 @@
           const date = new Date(year, month - 1 + offset, 1);
           state.currentMonth = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
           renderAll();
+
+          logAppEvent('change_month_view', {
+            'target_month': state.currentMonth
+          });
         };
 
         document.getElementById('prevMonth').addEventListener('click', () => changeMonth(-1));
@@ -1727,6 +1787,8 @@
           document.getElementById('btnShelfMonth').classList.add('is-active');
           document.getElementById('btnShelfAll').classList.remove('is-active');
           renderShelfList();
+
+          logAppEvent('shelf_mode_toggle', { 'shelf_mode': 'month' });
         });
 
         document.getElementById('btnShelfAll').addEventListener('click', (e) => {
@@ -1734,6 +1796,8 @@
           document.getElementById('btnShelfAll').classList.add('is-active');
           document.getElementById('btnShelfMonth').classList.remove('is-active');
           renderShelfList();
+
+          logAppEvent('shelf_mode_toggle', { 'shelf_mode': 'all_stock' });
         });
 
         // 検索
@@ -1746,6 +1810,8 @@
         document.getElementById('shelfSort').addEventListener('change', (e) => {
           state.shelfSortKey = e.target.value;
           renderShelfList();
+
+          logAppEvent('shelf_sort_change', { 'sort_key': e.target.value });
         });
 
         // 絞り込みフィルターボタン
@@ -1755,6 +1821,8 @@
             btn.classList.add('is-active');
             state.shelfFilterStatus = btn.dataset.status;
             renderShelfList();
+
+            logAppEvent('shelf_filter_status', { 'status_filter': btn.dataset.status });
           });
         });
 
@@ -1763,6 +1831,8 @@
           state.theme = state.theme === 'light' ? 'dark' : 'light';
           document.body.setAttribute('data-theme', state.theme);
           saveToStorage();
+
+          logAppEvent('theme_toggle', { 'theme': state.theme });
         });
 
         // ダッシュボードデザインスタイル切り替え
@@ -1777,6 +1847,8 @@
             state.settings.style = card.dataset.style;
             document.body.setAttribute('data-style', state.settings.style);
             updateStyleButtons(); saveToStorage(); showToast(`スタイルを変更しました。`);
+
+            logAppEvent('change_style', { 'visual_style': card.dataset.style });
           });
         });
 
@@ -1812,11 +1884,19 @@
 
               document.getElementById('lookupSource').textContent = `「${info.title}」を読み込みました`;
               setDefaultDueDate(); showToast('書籍情報を取得しました！');
+
+              logAppEvent('isbn_search', {
+                'search_status': 'success',
+                'isbn': isbn,
+                'book_title': info.title
+              });
             } else {
               showToast('書籍情報が見つかりませんでした。');
+              logAppEvent('isbn_search', { 'search_status': 'not_found', 'isbn': isbn });
             }
           } catch (err) {
             showToast('検索中にエラーが発生しました。');
+            logAppEvent('isbn_search', { 'search_status': 'error', 'isbn': isbn });
           } finally {
             searchBtn.disabled = false; searchBtn.textContent = 'ISBNで検索';
           }
@@ -1827,18 +1907,20 @@
           e.preventDefault();
 
           const borrowDate = document.getElementById('borrowDateInput').value;
-          // 借りた日の年月を算出して本棚の表示月に紐づける
           const [yyyy, mm] = borrowDate.split('-');
           const monthString = `${yyyy}-${mm}`;
+          const title = document.getElementById('titleInput').value.trim();
+          const price = parseInt(document.getElementById('priceInput').value) || 0;
+          const isbn = document.getElementById('hiddenIsbn').value;
 
           state.books.push({
             id: 'book_' + Date.now(),
-            title: document.getElementById('titleInput').value.trim(),
-            price: parseInt(document.getElementById('priceInput').value) || 0,
+            title: title,
+            price: price,
             author: document.getElementById('authorInput').value.trim(),
             dueDate: document.getElementById('dueInput').value,
             borrowDate: borrowDate,
-            isbn: document.getElementById('hiddenIsbn').value,
+            isbn: isbn,
             coverUrl: document.getElementById('hiddenCoverUrl').value,
             status: 'borrowed',
             month: monthString
@@ -1851,6 +1933,14 @@
           document.getElementById('hiddenCoverUrl').value = '';
           
           setDefaultDueDate(); showToast('本をストックに登録しました！');
+
+          // GA4: 本の登録をトラッキング
+          logAppEvent('book_add', {
+            'book_title': title,
+            'book_price': price,
+            'registration_method': isbn ? 'isbn_api' : 'manual_input'
+          });
+
           document.querySelector('.tab[data-tab="dashboard"]').click();
         });
 
@@ -1862,7 +1952,15 @@
           state.settings.preAddTax = parseInt(document.getElementById('preAddTaxInput').value) || 0;
 
           saveToStorage(); renderAll(); setDefaultDueDate();
-          showToast('設定を保存しました。'); document.querySelector('.tab[data-tab="dashboard"]').click();
+          showToast('設定を保存しました。'); 
+
+          logAppEvent('save_settings', {
+            'monthly_tax_cap': state.settings.monthlyTax,
+            'default_loan_days': state.settings.loanDays,
+            'pre_existing_reading_value': state.settings.preAddTax
+          });
+
+          document.querySelector('.tab[data-tab="dashboard"]').click();
         });
 
         // 楽天アンカーバナー閉じる処理
@@ -1870,6 +1968,8 @@
           e.stopPropagation();
           document.getElementById('bottomPromoBanner').style.display = 'none';
           document.querySelector('.app-shell').style.paddingBottom = '90px';
+
+          logAppEvent('close_anchor_banner', { 'banner_type': 'rakuten_furusato_bottom' });
         });
 
         // 𝕏 シェア
@@ -1879,6 +1979,8 @@
           const rate = state.settings.monthlyTax > 0 ? Math.min(Math.round((sum / state.settings.monthlyTax) * 100), 100) : 0;
           const text = `【税金回収カウンター】\n今月の住民税を ${rate}%（${sum.toLocaleString()}円分）回収しました！\n図書館で読んだ本を記録して、賢く住民税を取り戻そう！\n\nby @zeikinzero_ #税金回収カウンター #読書\n`;
           window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(window.location.href)}`, '_blank');
+
+          logAppEvent('sns_share', { 'platform_target': 'X_Twitter', 'recovered_rate': rate });
         });
 
         // Threads シェア
@@ -1888,6 +1990,8 @@
           const rate = state.settings.monthlyTax > 0 ? Math.min(Math.round((sum / state.settings.monthlyTax) * 100), 100) : 0;
           const text = `【税金回収カウンター】\n今月の住民税を ${rate}%（${sum.toLocaleString()}円分）回収しました！\n図書館で読んだ本を記録して、賢く住民税を取り戻そう！\n${window.location.href}`;
           window.open(`https://www.threads.net/intent/post?text=${encodeURIComponent(text)}`, '_blank');
+
+          logAppEvent('sns_share', { 'platform_target': 'Threads', 'recovered_rate': rate });
         });
 
         // Instagram用コピー
@@ -1908,6 +2012,8 @@
             document.body.removeChild(textArea);
             showToast('紹介文をコピーしました！');
           }
+
+          logAppEvent('sns_share', { 'platform_target': 'Instagram_Copy', 'recovered_rate': rate });
         });
 
         init();
